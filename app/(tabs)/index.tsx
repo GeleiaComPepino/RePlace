@@ -1,75 +1,90 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import * as NavigationBar from 'expo-navigation-bar';
+import React from "react";
+import { Image, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+//TODO: Permanent image links
+const IMG_PROFILE = "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/bw1o78ag_expires_30_days.png";
+const IMG_MAP = "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/idppdcln_expires_30_days.png";
+const IMG_ALL_POINTS = "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/bwm3f7v7_expires_30_days.png";
 
-export default function HomeScreen() {
+export default function App() {
+  const insets = useSafeAreaInsets();
+
+  // Down Bar fix color
+  React.useEffect(() => {
+    NavigationBar.setVisibilityAsync('visible');
+    NavigationBar.setButtonStyleAsync('dark');
+  }, []);
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+      {/* Status Bar fix color */}
+      <StatusBar barStyle="dark-content" backgroundColor="#EEEFEF" />
+
+      <ScrollView style={{ flex: 1, backgroundColor: "#EEEFEF" }} contentContainerStyle={{ paddingTop: insets.top }}>
+        
+        {/* Header */}
+        <View style={{ flexDirection: "row", paddingHorizontal: 16, paddingBottom: 7, alignItems: "center" }}>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: "#000", fontSize: 20, fontWeight: "bold" }}>Olá Bryan!</Text>
+            <Text style={{ color: "#222", fontSize: 16 }}>Pontos atualizados à 32 minutos atrás</Text>
+          </View>
+          <Image source={{ uri: IMG_PROFILE }} resizeMode="cover" style={{ width: 80, height: 76, borderRadius: 12 }} />
+        </View>
+
+        {/* Quick Actions */}
+        <View style={{ flexDirection: "row", justifyContent: "center", marginHorizontal: 13, marginBottom: 12 }}>
+          <View style={{ backgroundColor: "#FFF", borderRadius: 16, paddingVertical: 24, paddingHorizontal: 24, marginHorizontal: 8, alignItems: "center" }}>
+            <Image source={{ uri: IMG_MAP }} resizeMode="contain" style={{ width: 56, height: 56, marginBottom: 8 }} />
+            <Text style={{ fontSize: 16, fontWeight: "bold", color: "#000" }}>Ver no Mapa</Text>
+          </View>
+
+          <View style={{ backgroundColor: "#FFF", borderRadius: 16, paddingVertical: 24, paddingHorizontal: 16, marginHorizontal: 8, alignItems: "center" }}>
+            <View style={{ borderWidth: 1, borderColor: "#00000012", borderRadius: 12, padding: 8, marginBottom: 8 }}>
+              <Image source={{ uri: IMG_ALL_POINTS }} resizeMode="contain" style={{ width: 40, height: 40 }} />
+            </View>
+            <Text style={{ fontSize: 16, fontWeight: "bold", textAlign: "center", color: "#000" }}>Ver todos os pontos</Text>
+          </View>
+        </View>
+
+        {/* Nearby Points */}
+        <Text style={{ fontSize: 20, fontWeight: "bold", color: "#000", marginLeft: 16, marginBottom: 8 }}>
+          Pontos mais próximos
+        </Text>
+
+        {[
+          { name: "Droga Raia - Boa Vista", address: "Droga Raia, R. Nicolau Kluppel Neto, 1580 - Contorno", distance: "1.6 Km" },
+          { name: "Supermercado Atacadão", address: "Av. Visc. de Taunay, S/N - Contorno", distance: "1.8 Km" },
+          { name: "Supermercado Condor", address: "Av. João Manoel dos Santos Ribas, 555 - Nova Rússia", distance: "5.7 Km" },
+          { name: "Loja Casas Bahia", address: "Av. Dr. Vicente Machado, 216 - Centro", distance: "6.2 Km" },
+          { name: "Kalunga - Shopping Palladium", address: "Shopping Palladium - R. Ermelino de Leão, 703 - Olarias", distance: "7.3 Km" },
+        ].map((point, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => alert(`Redirecionando para ${point.address}`)}
+            style={{ marginHorizontal: 13, marginBottom: 5 }}
+          >
+            <View style={{ flexDirection: "row", backgroundColor: "#FFF", paddingHorizontal: 16, paddingVertical: 16, borderRadius: 12 }}>
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10, color: "#000" }}>
+                  {point.name}
+                </Text>
+                <Text style={{ fontSize: 14, color: "#222" }}>
+                  {point.address}
+                </Text>
+              </View>
+              <Text style={{ fontSize: 16, fontWeight: "bold", color: "#25884F", alignSelf: "center" }}>
+                {point.distance}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+
+        {/* Add margin bottom to avoid cutting off last item */}
+        <View style={{ height: insets.bottom - 20 }} />
+
+      </ScrollView>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
