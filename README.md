@@ -1,50 +1,83 @@
-# Welcome to your Expo app 👋
+![RePlace banner](https://github.com/user-attachments/assets/a1456a59-e30c-4821-a899-abf71c327e3a)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# ***Replace*** – Encontre pontos de reciclagem de baterias e pilhas ♻️
 
-## Get started
+## 🚀 Sobre o Replace
 
-1. Install dependencies
+O **Replace** é um aplicativo mobile feito em **React Native** para ajudar você a **localizar pontos de reciclagem de baterias e pilhas** próximos.  
+Este projeto faz parte do **FiCiências** e foi desenvolvido por **Bryan Rafael (GeleiaComPepino)** para um projeto do FiCiências.
 
-   ```bash
-   npm install
-   ```
+Com o Replace, você contribui para um planeta mais sustentável, descartando corretamente seus resíduos eletrônicos.
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 📱 Funcionalidades
 
-In the output, you'll find options to open the app in a
+- 🔹 Localização de pontos de reciclagem próximos usando mapa.  
+- 🔹 Busca por tipo de bateria ou pilha.  
+- 🔹 Informações detalhadas de cada ponto de coleta (localização, lugares abertos e tipos de resíduos aceitos).  
+- 🔹 Interface simples e intuitiva para uso rápido.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 💻 Tecnologias
 
-## Get a fresh project
+- **React Native** – Para rodar no Android e iOS.  
+- **Expo** – Para facilitar testes e deploy.  
+- **Google Maps API** – Para exibir pontos de reciclagem no mapa.
 
-When you're ready, run:
+---
 
+## ⬇️ Como instalar (para desenvolvedores)
+
+1. Clone o repositório:  
 ```bash
-npm run reset-project
+git clone https://github.com/GeleiaComPepino/RePlace.git
+cd RePlace
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Instale as dependências:  
+```bash
+npm install
+```
+ou  
+```bash
+yarn
+```
 
-## Learn more
+3. Rode o app em modo de desenvolvimento:  
+```bash
+npm run android
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 🛠 Suporte e sugestões
 
-## Join the community
+Encontrou algum bug ou quer sugerir melhorias?  
 
-Join our community of developers creating universal apps.
+- Abra uma **issue** no GitHub.  
+- Entre em contato com o **GeleiaComPepino** via Discord para feedback direto.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## 📜 Licença
+
+O Replace está sob **GNU General Public License (GPL)**, garantindo que você pode usar, modificar e distribuir o app livremente.
+
+---
+
+## ❤ Criado com 💚
+
+![React Native Logo](https://reactnative.dev/img/header_logo.svg)
+
+---
+
+## Criador
+
+Exclusivamente desenvolvido por **GeleiaComPepino** para o **FiCiências**.  
+
+<img src="https://github.com/GeleiaComPepino.png?size=100" alt="GeleiaComPepino logo" width="100" height="100" style="border-radius:50%;"/>
+
+💚 **Use o Replace e ajude o planeta reciclando suas baterias e pilhas!** 💚
+
