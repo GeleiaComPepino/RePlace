@@ -54,7 +54,6 @@ export default function App() {
   useEffect(() => {
     // Configura NavigationBar para Android
     if (Platform.OS === 'android') {
-      NavigationBar.setBehaviorAsync('sticky'); // mantém altura normal
       NavigationBar.setBackgroundColorAsync('#EEEFEF'); // combina com o app
       NavigationBar.setButtonStyleAsync('dark');
       NavigationBar.setVisibilityAsync('visible');
