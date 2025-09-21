@@ -1,153 +1,150 @@
-import React from "react";
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import locationsJson from '@/assets/db/postos_com_tags.json';
+import logos from '@/logos';
+import * as Location from 'expo-location';
+import * as NavigationBar from 'expo-navigation-bar';
+import React, { useEffect, useState } from "react";
+import { Alert, FlatList, Image, Linking, Platform, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-// Componente de Botão Redondo
-const RoundButton = ({ children, style, onPress }) => (
-  <TouchableOpacity style={[styles.roundButton, style]} onPress={onPress}>
-    {children}
-  </TouchableOpacity>
+interface LocationItem {
+  nome_estabelecimento: string;
+  endereco: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  latitude: number;
+  longitude: number;
+  tag: string;
+}
+
+const locations: LocationItem[] = locationsJson;
+
+const getDistanceKm = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat/2) ** 2 +
+    Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
+    Math.sin(dLon/2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+};
+
+// Open the location in Maps
+const openMaps = (latitude: number, longitude: number, label?: string) => {
+  const scheme = Platform.select({
+    ios: 'maps:0,0?q=',
+    android: 'geo:0,0?q='
+  });
+
+  const latLng = `${latitude},${longitude}`;
+  const query = label ? `${latLng}(${label})` : latLng;
+  const url = `${scheme}${query}`;
+
+  Linking.openURL(url).catch(err => console.error('Erro ao abrir o mapa:', err));
+};
+
+const RoundButton: React.FC<{ children: React.ReactNode; style?: any; onPress?: () => void }> = ({ children, style, onPress }) => (
+  <TouchableOpacity style={[styles.roundButton, style]} onPress={onPress}>{children}</TouchableOpacity>
 );
 
-// Componente de Card de Local
-const LocationCard = ({ image, name, address, distance }) => (
+const LocationCard: React.FC<{ image: any; name: string; address: string; distance: string }> = ({ image, name, address, distance }) => (
   <View style={styles.cardContainer}>
-    <Image source={{ uri: image }} style={styles.cardImage} />
+    <Image source={typeof image === 'number' ? image : { uri: image }} style={styles.cardImage} />
     <View style={styles.cardContent}>
       <Text style={styles.cardTitle}>{name}</Text>
       <Text style={styles.cardSubtitle}>{address}</Text>
     </View>
-
-    {/* Distância com estilo de botão, mas não clicável */}
     <View style={styles.distanceButton}>
       <Text style={styles.distanceText}>{distance}</Text>
     </View>
   </View>
 );
+
 export default function App() {
-    
+  const insets = useSafeAreaInsets();
+  const [selectedCity, setSelectedCity] = useState<string>("Ponta Grossa");
+  const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      NavigationBar.setBehaviorAsync('overlay-swipe');
+      NavigationBar.setBackgroundColorAsync('transparent');
+      NavigationBar.setButtonStyleAsync('dark');
+      NavigationBar.setVisibilityAsync('visible');
+    }
+
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permissão negada', 'Não foi possível acessar a localização.');
+        return;
+      }
+      const loc = await Location.getCurrentPositionAsync({});
+      setUserLocation({ latitude: loc.coords.latitude, longitude: loc.coords.longitude });
+    })();
+  }, []);
+
+  const filteredLocations = locations
+    .filter(loc => loc.cidade.toLowerCase() === selectedCity.toLowerCase())
+    .map(loc => {
+      let distanceKm = Number.MAX_SAFE_INTEGER;
+      if (userLocation) {
+        distanceKm = getDistanceKm(userLocation.latitude, userLocation.longitude, loc.latitude, loc.longitude);
+      }
+      return { ...loc, distanceKm };
+    })
+    .sort((a, b) => a.distanceKm - b.distanceKm)
+    .map(loc => ({ ...loc, distance: loc.distanceKm !== Number.MAX_SAFE_INTEGER ? `${loc.distanceKm.toFixed(1)} Km` : "N/A" }));
+
+  const handleCityPress = () => {
+    const cities = ["Ponta Grossa", "Curitiba", "São Paulo"];
+    Alert.alert("Escolha a cidade", "", cities.map(city => ({ text: city, onPress: () => setSelectedCity(city) })));
+  };
+
+  const renderItem = ({ item }: { item: LocationItem & { distance: string } }) => (
+    <TouchableOpacity 
+      onPress={() => openMaps(item.latitude, item.longitude, item.nome_estabelecimento)} 
+      style={{ marginBottom: 10 }}
+    >
+      <LocationCard image={logos[item.tag]} name={item.nome_estabelecimento} address={item.endereco} distance={item.distance} />
+    </TouchableOpacity>
+  );
+
   return (
-    <SafeAreaView style={styles.safe}>
-        {/* Header */}
-        <View style={styles.header}>
-          <Image
-            source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/qvsbmwyi_expires_30_days.png" }}
-            style={styles.logo}
-          />
-          
-          <RoundButton style={styles.locationButton} onPress={() => alert('Pressed!')}>
-            <Image
-                source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/77xzknzn_expires_30_days.png" }}
-                style={styles.locationIcon}
-            />
+    <SafeAreaView style={[styles.safe, { paddingTop: insets.top, paddingBottom: insets.bottom + (Platform.OS === 'android' ? 20 : 0) }]}>
+      <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+      <View style={styles.header}>
+        <Image source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/qvsbmwyi_expires_30_days.png" }} style={styles.logo} />
+        <RoundButton style={styles.locationButton} onPress={handleCityPress}><Text style={{ color: "#fff", fontWeight: "bold" }}>{selectedCity}</Text></RoundButton>
+        <RoundButton style={styles.statusButton} onPress={() => alert('Pressed!')}><Text style={styles.statusText}>Aberto</Text></RoundButton>
+        <RoundButton style={styles.filterButton} onPress={() => alert('Filtros')}>
+          <Text style={styles.filterText}>Filtros</Text>
+          <Image source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/o8k806wb_expires_30_days.png" }} style={styles.filterIcon} />
+        </RoundButton>
+      </View>
 
-            {/* Container com largura limitada */}
-            <View style={{ flex: 1, alignItems: 'center' }}>
-                <Text
-                style={{
-                    color: "#fff",
-                    fontWeight: "bold",
-                    textAlign: "center",
-                }}
-                numberOfLines={1}
-                adjustsFontSizeToFit
-                minimumFontScale={0.5}
-                >
-                Ponta Grossa
-                </Text>
-            </View>
-          </RoundButton>
-          <RoundButton style={styles.statusButton} onPress={() => alert('Pressed!')}>
-            <Text style={styles.statusText}>Aberto</Text>
-          </RoundButton>
-          <RoundButton style={styles.filterButton} onPress={() => alert('Pressed!')}>
-            <Text style={styles.filterText}>Filtros</Text>
-            <Image
-              source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/o8k806wb_expires_30_days.png" }}
-              style={styles.filterIcon}
-            />
-          </RoundButton>
-        </View>
-      <ScrollView style={styles.scroll}>
-
-        {/* Lista de Locais */}
-        {[
-        {
-            image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/l1spw51r_expires_30_days.png",
-            name: "Supermercado Condor",
-            address: "Av. João Manoel dos Santos Ribas, 555 - Nova Rússia",
-            distance: "5.7 Km",
-        },
-        {
-            image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/rx7b2biy_expires_30_days.png",
-            name: "Supermercado Atacadão",
-            address: "Av. Visc. de Taunay, S/N - Contorno",
-            distance: "1.8 Km",
-        },
-        {
-            image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/440tlkwq_expires_30_days.png",
-            name: "Droga Raia - Boa Vista",
-            address: "Droga Raia, R. Nicolau Kluppel Neto, 1580 - Contorno",
-            distance: "1.6 Km",
-        },
-        {
-            image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/ji7mhzo0_expires_30_days.png",
-            name: "Lojas Casas Bahia",
-            address: "Av. Dr. Vicente Machado, 216 - Centro",
-            distance: "6.2 Km",
-        },
-        {
-            image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/ymmzglkv_expires_30_days.png",
-            name: "Kalunga - Shopping Palladium",
-            address: "Shopping Palladium - R. Ermelino de Leão, 703 - Olarias",
-            distance: "7.3 Km",
-        },
-        {
-            image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/tl0yhexs_expires_30_days.png",
-            name: "Multicoisas -  Shopping Palladium",
-            address: "Shopping Palladium - R. Ermelino de Leão, 703 - Olarias",
-            distance: "7.2 Km",
-        },
-        {
-            image: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/cp18ysee_expires_30_days.png",
-            name: "Rede Superpão",
-            address: "R. Balduíno Taques, Órfãs",
-            distance: "7.2 Km",
-        },
-        ].map((location, index) => (
-        <TouchableOpacity
-            key={index}
-            onPress={() => alert(`Você clicou em ${location.name}`)}
-            style={{ marginBottom: 10 }}
-        >
-            <LocationCard
-            image={location.image}
-            name={location.name}
-            address={location.address}
-            distance={location.distance}
-            />
-        </TouchableOpacity>
-        ))}
-        {/* Add margin bottom to avoid cutting off last item */}
-        <View style={{ height: 30 }} />
-      </ScrollView>
-      
+      <FlatList 
+        data={filteredLocations} 
+        keyExtractor={(item, index) => index.toString()} 
+        renderItem={renderItem} 
+        contentContainerStyle={{ paddingBottom: Platform.OS === 'android' ? 30 + 20 : 30 }} 
+      />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#fff", paddingTop: 10 },
-  scroll: { flex: 1, backgroundColor: "#EEEFEF", paddingTop: 10 },
+  safe: { flex: 1, backgroundColor: "#fff" },
   header: { flexDirection: "row", alignItems: "center", margin: 16 },
-  logo: { width: 48, height: 48},
+  logo: { width: 48, height: 48 },
   roundButton: { borderRadius: 9999, paddingVertical: 10, paddingHorizontal: 12 },
-  locationButton: { flex: 1, flexDirection: "row", backgroundColor: "#000", marginRight: 6, alignItems: "center" },
-  locationIcon: { width: 16, height: 16, marginRight: 2 },
-  locationText: { color: "#fff", fontWeight: "bold", textAlign: "center" },
-  statusButton: { backgroundColor: "#000", marginRight: 6 },
+  locationButton: { flex: 1, backgroundColor: "#000", justifyContent: "center", alignItems: "center", marginRight: 6 },
+  statusButton: { backgroundColor: "#000", marginRight: 6, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999 },
   statusText: { color: "#fff", fontWeight: "bold", fontSize: 14 },
-  filterButton: { flexDirection: "row", backgroundColor: "#EEEFEF", borderColor: "#BBBDC0", borderWidth: 1 },
-  filterText: { color: "#000", fontWeight: "bold", fontSize: 14, marginRight: 11 },
+  filterButton: { flexDirection: "row", backgroundColor: "#EEEFEF", borderColor: "#BBBDC0", borderWidth: 1, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999 },
+  filterText: { color: "#000", fontWeight: "bold", fontSize: 14, marginRight: 6 },
   filterIcon: { width: 16, height: 16 },
   cardContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#fff", padding: 16, marginHorizontal: 16, marginBottom: 8, borderRadius: 8 },
   cardImage: { width: 55, height: 55, marginRight: 12, borderRadius: 8 },
@@ -156,8 +153,4 @@ const styles = StyleSheet.create({
   cardSubtitle: { fontSize: 14, color: "#222427" },
   distanceButton: { backgroundColor: "#EEEFEF", paddingVertical: 6, paddingHorizontal: 12, borderRadius: 20 },
   distanceText: { color: "#000", fontWeight: "bold", fontSize: 14 },
-  footer: { flexDirection: "row", justifyContent: "space-between", backgroundColor: "#fff", paddingVertical: 7, paddingHorizontal: 51 },
-  footerItem: { alignItems: "center" },
-  footerIcon: { width: 24, height: 24, marginBottom: 2 },
-  footerText: { fontSize: 12, color: "#222427" },
 });

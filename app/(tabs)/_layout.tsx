@@ -1,6 +1,8 @@
+import * as NavigationBar from 'expo-navigation-bar';
 import { Tabs } from 'expo-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -9,29 +11,31 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const insets = useSafeAreaInsets();
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      NavigationBar.setBehaviorAsync('overlay-swipe');
+      NavigationBar.setBackgroundColorAsync('transparent');
+      NavigationBar.setButtonStyleAsync('dark');
+      NavigationBar.setVisibilityAsync('visible');
+    }
+  }, []);
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#000000', // <-- muda a cor ativa para branco
         headerShown: false,
+        tabBarActiveTintColor: '#000',
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: 'absolute',
-            backgroundColor: 'white',
-            borderTopWidth: 0,       // <-- remove The line
-            shadowColor: 'transparent', // <-- remove iOS shadow
-            elevation: 0,            // <-- remove Android shadow
-          },
-          default: {
-            backgroundColor: 'white',
-            borderTopWidth: 0,       // remove The line on Android
-            elevation: 0,            // remove shadow on Android
-          },
-        }),
-
+        tabBarStyle: {
+          backgroundColor: 'white',
+          borderTopWidth: 0,
+          elevation: 0,
+          shadowColor: 'transparent',
+          paddingBottom: insets.bottom, // garante que fique acima da barra do Android
+        },
       }}
     >
       <Tabs.Screen
