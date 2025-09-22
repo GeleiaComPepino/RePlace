@@ -5,9 +5,9 @@ import React, { useEffect, useState } from "react";
 import { Alert, Image, Linking, Platform, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const IMG_PROFILE = "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/bw1o78ag_expires_30_days.png";
-const IMG_MAP = "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/idppdcln_expires_30_days.png";
-const IMG_ALL_POINTS = "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/bwm3f7v7_expires_30_days.png";
+const NOTIFICATION_ICON = require('@/assets/images/notification.png');
+const IMG_MAP = require('@/assets/images/map.png');
+const IMG_ALL_POINTS = require('@/assets/images/allpoints.png');
 
 interface LocationItem {
   nome_estabelecimento: string;
@@ -99,19 +99,19 @@ export default function App() {
             <Text style={{ color: "#000", fontSize: 20, fontWeight: "bold" }}>Olá Bryan!</Text>
             <Text style={{ color: "#222", fontSize: 16 }}>Pontos atualizados à 32 minutos atrás</Text>
           </View>
-          <Image source={{ uri: IMG_PROFILE }} resizeMode="cover" style={{ width: 80, height: 76, borderRadius: 12 }} />
+          <Image source={NOTIFICATION_ICON} resizeMode="cover" style={{ width: 80, height: 76, borderRadius: 12 }} />
         </View>
 
         {/* Quick Actions */}
         <View style={{ flexDirection: "row", justifyContent: "center", marginHorizontal: 13, marginBottom: 12 }}>
           <View style={{ backgroundColor: "#FFF", borderRadius: 16, paddingVertical: 24, paddingHorizontal: 24, marginHorizontal: 8, alignItems: "center" }}>
-            <Image source={{ uri: IMG_MAP }} resizeMode="contain" style={{ width: 56, height: 56, marginBottom: 8 }} />
+            <Image source={IMG_MAP} resizeMode="contain" style={{ width: 56, height: 56, marginBottom: 8 }} />
             <Text style={{ fontSize: 16, fontWeight: "bold", color: "#000" }}>Ver no Mapa</Text>
           </View>
 
           <View style={{ backgroundColor: "#FFF", borderRadius: 16, paddingVertical: 24, paddingHorizontal: 16, marginHorizontal: 8, alignItems: "center" }}>
             <View style={{ borderWidth: 1, borderColor: "#00000012", borderRadius: 12, padding: 8, marginBottom: 8 }}>
-              <Image source={{ uri: IMG_ALL_POINTS }} resizeMode="contain" style={{ width: 40, height: 40 }} />
+              <Image source={IMG_ALL_POINTS } resizeMode="contain" style={{ width: 40, height: 40 }} />
             </View>
             <Text style={{ fontSize: 16, fontWeight: "bold", textAlign: "center", color: "#000" }}>Ver todos os pontos</Text>
           </View>
