@@ -18667,7 +18667,7 @@
         "estado": "SP",
         "latitude": -23.7011488,
         "longitude": -46.7850317,
-        "tag": "drogaraia"
+        "tag": "drogaria"
     },
     {
         "nome_estabelecimento": "Drogaria Araujo S.a. - 003 - Cd M. Antonio Araujo",
@@ -18677,17 +18677,7 @@
         "estado": "MG",
         "latitude": -19.9479667,
         "longitude": -44.0295201,
-        "tag": "drogaraia"
-    },
-    {
-        "nome_estabelecimento": "Drogaria Araujo S.a. - 003 - Cd M. Antonio Araujo",
-        "endereco": "AV GENERAL DAVID SARNOFF, 3405, -",
-        "bairro": "CIDADE INDUSTRIAL",
-        "cidade": "CONTAGEM",
-        "estado": "MG",
-        "latitude": -19.9479667,
-        "longitude": -44.0295201,
-        "tag": "drogaraia"
+        "tag": "drogaria"
     },
     {
         "nome_estabelecimento": "Drogaria Boa Vista",
@@ -46341,7 +46331,7 @@
     },
     {
         "nome_estabelecimento": "Mercado Extra",
-        "endereco": "RUA DR COUTINHO, 733 CENTRO               , 733, -",
+        "endereco": "RUA DR COUTINHO, 733 CENTRO   , 733, -",
         "bairro": "-",
         "cidade": "ITAPETININGA",
         "estado": "SP",
@@ -52001,7 +51991,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AV EPITACIO PESSOA,4200            , 4200, -",
+        "endereco": "AV EPITACIO PESSOA,4200, 4200, -",
         "bairro": "-",
         "cidade": "JOÃO PESSOA",
         "estado": "PB",
@@ -52021,7 +52011,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA DR SATAMINI 164 .              , 164, -",
+        "endereco": "RUA DR SATAMINI 164 .  , 164, -",
         "bairro": "-",
         "cidade": "RIO DE JANEIRO",
         "estado": "RJ",
@@ -52031,7 +52021,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA JOSE LINHARES,245              , 245, -",
+        "endereco": "RUA JOSE LINHARES,245  , 245, -",
         "bairro": "-",
         "cidade": "RIO DE JANEIRO",
         "estado": "RJ",
@@ -52061,7 +52051,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA BANDEIRANTES, 430              , 430, -",
+        "endereco": "RUA BANDEIRANTES, 430  , 430, -",
         "bairro": "-",
         "cidade": "MARÍLIA",
         "estado": "SP",
@@ -52091,7 +52081,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AV DAS AMERICAS ,2000              , 2000, -",
+        "endereco": "AV DAS AMERICAS ,2000  , 2000, -",
         "bairro": "-",
         "cidade": "RIO DE JANEIRO",
         "estado": "RJ",
@@ -52101,7 +52091,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AV.AGUANAMBI, 1393 FATIMA                 , 1393, -",
+        "endereco": "AV.AGUANAMBI, 1393 FATIMA     , 1393, -",
         "bairro": "-",
         "cidade": "FORTALEZA",
         "estado": "CE",
@@ -52171,7 +52161,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA SERRA DE BRAGANCA              , 0, -",
+        "endereco": "RUA SERRA DE BRAGANCA  , 0, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52211,7 +52201,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AVENIDA JOAO XXIII 1919            , 1919, -",
+        "endereco": "AVENIDA JOAO XXIII 1919, 1919, -",
         "bairro": "-",
         "cidade": "TERESINA",
         "estado": "PI",
@@ -52231,7 +52221,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "ALAMEDA MADEIRA, 152               , 152, -",
+        "endereco": "ALAMEDA MADEIRA, 152   , 152, -",
         "bairro": "-",
         "cidade": "BARUERI",
         "estado": "SP",
@@ -52261,7 +52251,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA GAL GLICERIO,3733              , 3733, -",
+        "endereco": "RUA GAL GLICERIO,3733  , 3733, -",
         "bairro": "-",
         "cidade": "SÃO JOSÉ DO RIO PRETO",
         "estado": "SP",
@@ -52271,7 +52261,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA SANTA FILOMENA, 677            , 677, -",
+        "endereco": "RUA SANTA FILOMENA, 677, 677, -",
         "bairro": "-",
         "cidade": "SÃO BERNARDO DO CAMPO",
         "estado": "SP",
@@ -52281,7 +52271,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA ANFRISIO LOBAO 922             , 922, -",
+        "endereco": "RUA ANFRISIO LOBAO 922 , 922, -",
         "bairro": "-",
         "cidade": "TERESINA",
         "estado": "PI",
@@ -52311,7 +52301,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AVENIDA D PEDRO I, 195             , 195, -",
+        "endereco": "AVENIDA D PEDRO I, 195 , 195, -",
         "bairro": "-",
         "cidade": "GUARUJÁ",
         "estado": "SP",
@@ -52321,7 +52311,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AV NOVE DE JULHO 3535              , 3535, -",
+        "endereco": "AV NOVE DE JULHO 3535  , 3535, -",
         "bairro": "-",
         "cidade": "JUNDIAÍ",
         "estado": "SP",
@@ -52351,7 +52341,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AV BADY BASSIT,5300                , 5300, -",
+        "endereco": "AV BADY BASSIT,5300    , 5300, -",
         "bairro": "-",
         "cidade": "SÃO JOSÉ DO RIO PRETO",
         "estado": "SP",
@@ -52371,7 +52361,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AVENIDA IBIRAPUERA 1770            , 1770, -",
+        "endereco": "AVENIDA IBIRAPUERA 1770, 1770, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52381,7 +52371,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AV LAVANDISCA, 249/263             , 249, -",
+        "endereco": "AV LAVANDISCA, 249/263 , 249, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52411,7 +52401,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA MARANHAO 846                   , 846, -",
+        "endereco": "RUA MARANHAO 846       , 846, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52451,7 +52441,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AV. DA ABOLICAO, 3790              , 3790, -",
+        "endereco": "AV. DA ABOLICAO, 3790  , 3790, -",
         "bairro": "-",
         "cidade": "FORTALEZA",
         "estado": "CE",
@@ -52461,7 +52451,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA PEDROSO,215                    , 215, -",
+        "endereco": "RUA PEDROSO,215        , 215, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52471,7 +52461,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA PAMPLONA, 816                  , 816, -",
+        "endereco": "RUA PAMPLONA, 816      , 816, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52491,7 +52481,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA APIACAS, 747                   , 747, -",
+        "endereco": "RUA APIACAS, 747       , 747, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52511,7 +52501,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA SOCRATES, 120                  , 120, -",
+        "endereco": "RUA SOCRATES, 120      , 120, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52531,7 +52521,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "PRACA PANAMERICANA 217             , 217, -",
+        "endereco": "PRACA PANAMERICANA 217 , 217, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52541,7 +52531,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA MARIA ANTONIA 422              , 422, -",
+        "endereco": "RUA MARIA ANTONIA 422  , 422, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52561,7 +52551,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA ABILIO SOARES, 386             , 386, -",
+        "endereco": "RUA ABILIO SOARES, 386 , 386, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52611,7 +52601,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA DR. CESAR,1234                 , 1234, -",
+        "endereco": "RUA DR. CESAR,1234     , 1234, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52641,7 +52631,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA DAS FIGUEIRAS, 1021            , 1021, -",
+        "endereco": "RUA DAS FIGUEIRAS, 1021, 1021, -",
         "bairro": "-",
         "cidade": "SANTO ANDRÉ",
         "estado": "SP",
@@ -52691,7 +52681,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA AUGUSTO TOLLE, 470             , 470, -",
+        "endereco": "RUA AUGUSTO TOLLE, 470 , 470, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52701,7 +52691,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA MARANHAO, 975                  , 975, -",
+        "endereco": "RUA MARANHAO, 975      , 975, -",
         "bairro": "-",
         "cidade": "SÃO CAETANO DO SUL",
         "estado": "SP",
@@ -52711,7 +52701,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA BAIRI,435                      , 435, -",
+        "endereco": "RUA BAIRI,435          , 435, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52731,7 +52721,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AV STO AMARO  4530                 , 4530, -",
+        "endereco": "AV STO AMARO  4530     , 4530, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52761,7 +52751,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA APINAJES 1147                  , 1147, -",
+        "endereco": "RUA APINAJES 1147      , 1147, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52771,7 +52761,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA HEITOR PENTEADO 250            , 250, -",
+        "endereco": "RUA HEITOR PENTEADO 250, 250, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52801,7 +52791,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AVENIDA BRASILIA 1177              , 1177, -",
+        "endereco": "AVENIDA BRASILIA 1177  , 1177, -",
         "bairro": "-",
         "cidade": "ARAÇATUBA",
         "estado": "SP",
@@ -52811,7 +52801,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "AVENIDA ANGELICA 1696              , 1696, -",
+        "endereco": "AVENIDA ANGELICA 1696  , 1696, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52841,7 +52831,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA DA CONSOLACAO 2581             , 2581, -",
+        "endereco": "RUA DA CONSOLACAO 2581 , 2581, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
@@ -52891,7 +52881,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA GENERAL OSORIO 1844            , 1844, -",
+        "endereco": "RUA GENERAL OSORIO 1844, 1844, -",
         "bairro": "-",
         "cidade": "CAMPINAS",
         "estado": "SP",
@@ -52901,7 +52891,7 @@
     },
     {
         "nome_estabelecimento": "Pão De Açúcar",
-        "endereco": "RUA AFONSO BRAS 480                , 480, -",
+        "endereco": "RUA AFONSO BRAS 480    , 480, -",
         "bairro": "-",
         "cidade": "SÃO PAULO",
         "estado": "SP",
