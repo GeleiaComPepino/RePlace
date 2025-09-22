@@ -21,6 +21,7 @@ interface LocationItem {
 
 const locations = locationsJson as LocationItem[];
 
+// Função para calcular distância em km
 const getDistanceKm = (lat1: number, lon1: number, lat2: number, lon2: number) => {
   const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -32,6 +33,7 @@ const getDistanceKm = (lat1: number, lon1: number, lat2: number, lon2: number) =
   return R * c;
 };
 
+// Abrir mapas
 const openMaps = (latitude: number, longitude: number, label?: string) => {
   const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
   const latLng = `${latitude},${longitude}`;
@@ -40,10 +42,12 @@ const openMaps = (latitude: number, longitude: number, label?: string) => {
   Linking.openURL(url).catch(err => console.error('Erro ao abrir o mapa:', err));
 };
 
+// Botão redondo
 const RoundButton: React.FC<{ children: React.ReactNode; style?: any; onPress?: () => void }> = ({ children, style, onPress }) => (
   <TouchableOpacity style={[styles.roundButton, style]} onPress={onPress}>{children}</TouchableOpacity>
 );
 
+// Card de localização
 const LocationCard: React.FC<{ image: any; name: string; address: string; distance: string }> = ({ image, name, address, distance }) => (
   <View style={styles.cardContainer}>
     <Image source={typeof image === 'number' ? image : { uri: image }} style={styles.cardImage} />
@@ -56,6 +60,15 @@ const LocationCard: React.FC<{ image: any; name: string; address: string; distan
     </View>
   </View>
 );
+
+// Função para formatar cidade (primeira letra maiúscula)
+const formatCityName = (city: string) => {
+  return city
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
 
 export default function App() {
   const insets = useSafeAreaInsets();
@@ -85,7 +98,7 @@ export default function App() {
       const userCoords = { latitude: loc.coords.latitude, longitude: loc.coords.longitude };
       setUserLocation(userCoords);
 
-      // Find nearest location and set its city
+      // Encontra a loja mais próxima e seleciona sua cidade
       let nearestLocation: LocationItem | null = null;
       let minDistance = Number.MAX_SAFE_INTEGER;
 
@@ -145,7 +158,9 @@ export default function App() {
         <Image source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/M9a925XVH8/qvsbmwyi_expires_30_days.png" }} style={styles.logo} />
         <View style={{ flex: 1 }}>
           <RoundButton style={styles.locationButton} onPress={() => setShowCityList(prev => !prev)}>
-            <Text style={{ color: "#fff", fontWeight: "bold" }}>{selectedCity || "Carregando..."}</Text>
+            <Text style={{ color: "#fff", fontWeight: "bold" }}>
+              {selectedCity ? formatCityName(selectedCity) : "Carregando..."}
+            </Text>
           </RoundButton>
           {showCityList && (
             <View style={styles.cityListContainer}>
@@ -153,8 +168,11 @@ export default function App() {
                 data={uniqueCities}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
-                  <TouchableOpacity style={styles.cityItem} onPress={() => { setSelectedCity(item); setShowCityList(false); }}>
-                    <Text style={styles.cityText}>{item}</Text>
+                  <TouchableOpacity
+                    style={styles.cityItem}
+                    onPress={() => { setSelectedCity(item); setShowCityList(false); }}
+                  >
+                    <Text style={styles.cityText}>{formatCityName(item)}</Text>
                   </TouchableOpacity>
                 )}
               />
