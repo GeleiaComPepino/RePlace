@@ -7,6 +7,7 @@ import {
   Image,
   Linking,
   Platform,
+  RefreshControl,
   StatusBar,
   StyleSheet,
   Text,
@@ -120,22 +121,16 @@ export default function App() {
   const [isCityListVisible, setCityListVisible] = useState(false);
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
 
   // Lista de cidades únicas
   const uniqueCities = Array.from(
     new Map(locations.map((loc) => [loc.cidade.toLowerCase(), loc.cidade])).values()
   ).sort();
 
-  // Pega localização do usuário e cidade mais próxima
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS === "android") {
-        NavigationBar.setBehaviorAsync("overlay-swipe");
-        NavigationBar.setBackgroundColorAsync("transparent");
-        NavigationBar.setButtonStyleAsync("dark");
-        NavigationBar.setVisibilityAsync("visible");
-      }
-
+  // Função para carregar localização e cidade mais próxima
+  const loadUserLocation = async () => {
+    try {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") return;
 
@@ -155,8 +150,30 @@ export default function App() {
       }
 
       if (nearest) setSelectedCity(nearest.cidade);
+    } catch (err) {
+      console.error("Erro ao carregar localização:", err);
+    }
+  };
+
+  // Primeiro carregamento
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS === "android") {
+        NavigationBar.setBehaviorAsync("overlay-swipe");
+        NavigationBar.setBackgroundColorAsync("transparent");
+        NavigationBar.setButtonStyleAsync("dark");
+        NavigationBar.setVisibilityAsync("visible");
+      }
+      await loadUserLocation();
     })();
   }, []);
+
+  // Refresh handler
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await loadUserLocation(); //recarrega pontos
+    setRefreshing(false);
+  };
 
   // Filtra estabelecimentos
   const filteredLocations = selectedCity
@@ -270,6 +287,9 @@ export default function App() {
           contentContainerStyle={{
             paddingBottom: Platform.OS === "android" ? 50 : 30,
           }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       </View>
     </SafeAreaView>
