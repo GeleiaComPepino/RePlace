@@ -27,6 +27,9 @@ Com o Replace, você contribui para um planeta mais sustentável, descartando co
 - **Google Maps API** – Para exibir pontos de reciclagem no mapa.
 
 ---
+## 📱 Preview
+<img width="288" height="640" alt="image" src="https://github.com/user-attachments/assets/6a75f459-bfbd-4ec4-9bbe-2d30e9175270" /> <img width="288" height="640" alt="image" src="https://github.com/user-attachments/assets/b81d11bf-03f6-4fd8-b98f-c027218660dd" />
+
 
 ## ⬇️ Como instalar (para desenvolvedores)
 
