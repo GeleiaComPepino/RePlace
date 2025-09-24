@@ -69,7 +69,7 @@ O Replace está sob **GNU General Public License (GPL)**, garantindo que você p
 
 ## ❤ Criado com 💚
 
-![React Native Logo](https://reactnative.dev/img/header_logo.svg)
+<img width="900" height="263.67" alt="image" src="https://github.com/user-attachments/assets/0c13f33c-ed3b-4125-99ee-347c76e9db00" />
 
 ---
 
