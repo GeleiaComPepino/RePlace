@@ -27,6 +27,9 @@ Com o Replace, você contribui para um planeta mais sustentável, descartando co
 - **Google Maps API** – Para exibir pontos de reciclagem no mapa.
 
 ---
+## 📱 Preview
+<img width="288" height="640" alt="image" src="https://github.com/user-attachments/assets/6a75f459-bfbd-4ec4-9bbe-2d30e9175270" /> <img width="288" height="640" alt="image" src="https://github.com/user-attachments/assets/b81d11bf-03f6-4fd8-b98f-c027218660dd" />
+
 
 ## ⬇️ Como instalar (para desenvolvedores)
 
@@ -69,7 +72,7 @@ O Replace está sob **GNU General Public License (GPL)**, garantindo que você p
 
 ## ❤ Criado com 💚
 
-![React Native Logo](https://reactnative.dev/img/header_logo.svg)
+<img width="900" height="263.67" alt="image" src="https://github.com/user-attachments/assets/0c13f33c-ed3b-4125-99ee-347c76e9db00" />
 
 ---
 
