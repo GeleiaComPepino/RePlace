@@ -40,8 +40,25 @@ interface NotificationItem {
   id: number;
   title: string;
   description: string;
-  time: string;
+  timestamp: number; // Unix timestamp real
 }
+
+// Função para calcular tempo decorrido
+const formatTimeAgo = (timestamp: number): string => {
+  // Unix em segundos -> ms
+  const diffMs = Date.now() - timestamp * 1000;
+  const diffSec = Math.floor(diffMs / 1000);
+  const diffMin = Math.floor(diffSec / 60);
+  const diffHrs = Math.floor(diffMin / 60);
+
+  if (diffSec < 60) return "agora mesmo";
+  if (diffMin < 60) return `${diffMin} min atrás`;
+  if (diffHrs < 24) return `${diffHrs}h atrás`;
+
+  const diffDays = Math.floor(diffHrs / 24);
+  return `${diffDays}d atrás`;
+};
+
 
 // Cálculo de distância (Haversine)
 const getDistanceKm = (lat1: number, lon1: number, lat2: number, lon2: number) => {
@@ -73,13 +90,36 @@ export default function App() {
   const router = useRouter();
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   
-  // Notifications
   const [notifications, setNotifications] = useState<NotificationItem[]>([
-    { id: 1, title: "Novo ponto adicionado", description: "Um novo posto foi adicionado próximo a você.", time: "2 min atrás" },
-    { id: 2, title: "Atualização de pontos", description: "Os pontos foram atualizados recentemente.", time: "30 min atrás" },
-    { id: 3, title: "Promoção exclusiva", description: "Aproveite descontos especiais em postos parceiros.", time: "1h atrás" },
+    { 
+      id: 1, 
+      title: "Novo ponto adicionado", 
+      description: "Um novo posto foi adicionado próximo a você.", 
+      timestamp: 1758830160 // Unix timestamp
+    },
+    { 
+      id: 2, 
+      title: "Atualização de pontos", 
+      description: "Os pontos foram atualizados recentemente.", 
+      timestamp: 1758829080 // Unix timestamp
+    },
+    { 
+      id: 3, 
+      title: "Promoção exclusiva", 
+      description: "Aproveite descontos especiais em postos parceiros.", 
+      timestamp: 1758826680 // Unix timestamp
+    },
   ]);
   const [showNotifications, setShowNotifications] = useState(false);
+
+  // Forçar atualização automática do tempo
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTick((t) => t + 1); // força re-render
+    }, 60 * 1000); // a cada 1 minuto
+    return () => clearInterval(interval);
+  }, []);
 
   // Configuração inicial
   useEffect(() => {
@@ -130,7 +170,11 @@ export default function App() {
           <View style={styles.header}>
             <View style={styles.headerTextContainer}>
               <Text style={styles.greeting}>Olá Bryan!</Text>
-              <Text style={styles.subGreeting}>Pontos atualizados há 32 minutos</Text>
+              <Text style={styles.subGreeting}>
+                {notifications.length > 0 
+                  ? `${notifications[0].title} • ${formatTimeAgo(notifications[0].timestamp)}`
+                  : "Nenhuma notificação ainda"}
+              </Text>
             </View>
             <TouchableOpacity onPress={() => setShowNotifications(true)}>
               <Image source={NOTIFICATION_ICON} style={styles.notificationIcon} />
@@ -186,7 +230,7 @@ export default function App() {
                   <View style={styles.notificationItem}>
                     <Text style={styles.notificationTitle}>{item.title}</Text>
                     <Text style={styles.notificationDesc}>{item.description}</Text>
-                    <Text style={styles.notificationTime}>{item.time}</Text>
+                    <Text style={styles.notificationTime}>{formatTimeAgo(item.timestamp)}</Text>
                   </View>
                 )}
               />
