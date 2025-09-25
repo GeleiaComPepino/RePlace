@@ -1,12 +1,14 @@
 import locationsJson from '@/assets/db/postos_com_tags.json';
 import * as Location from 'expo-location';
 import * as NavigationBar from 'expo-navigation-bar';
-import { useRouter } from "expo-router"; // 👈 import router
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
+  FlatList,
   Image,
   Linking,
+  Modal,
   Platform,
   ScrollView,
   StatusBar,
@@ -32,6 +34,13 @@ interface LocationItem {
   latitude: number;
   longitude: number;
   tag: string;
+}
+
+interface NotificationItem {
+  id: number;
+  title: string;
+  description: string;
+  time: string;
 }
 
 // Cálculo de distância (Haversine)
@@ -61,8 +70,16 @@ const openMaps = (latitude: number, longitude: number, label?: string) => {
 // Componente principal
 export default function App() {
   const insets = useSafeAreaInsets();
-  const router = useRouter(); // 👈 inicializa router
+  const router = useRouter();
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
+  
+  // Notifications
+  const [notifications, setNotifications] = useState<NotificationItem[]>([
+    { id: 1, title: "Novo ponto adicionado", description: "Um novo posto foi adicionado próximo a você.", time: "2 min atrás" },
+    { id: 2, title: "Atualização de pontos", description: "Os pontos foram atualizados recentemente.", time: "30 min atrás" },
+    { id: 3, title: "Promoção exclusiva", description: "Aproveite descontos especiais em postos parceiros.", time: "1h atrás" },
+  ]);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   // Configuração inicial
   useEffect(() => {
@@ -115,7 +132,9 @@ export default function App() {
               <Text style={styles.greeting}>Olá Bryan!</Text>
               <Text style={styles.subGreeting}>Pontos atualizados há 32 minutos</Text>
             </View>
-            <Image source={NOTIFICATION_ICON} style={styles.notificationIcon} />
+            <TouchableOpacity onPress={() => setShowNotifications(true)}>
+              <Image source={NOTIFICATION_ICON} style={styles.notificationIcon} />
+            </TouchableOpacity>
           </View>
 
           {/* Quick Actions */}
@@ -154,6 +173,29 @@ export default function App() {
             </TouchableOpacity>
           ))}
         </ScrollView>
+
+        {/* Notifications Modal */}
+        <Modal visible={showNotifications} animationType="slide" transparent={true}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Notificações</Text>
+              <FlatList
+                data={notifications}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <View style={styles.notificationItem}>
+                    <Text style={styles.notificationTitle}>{item.title}</Text>
+                    <Text style={styles.notificationDesc}>{item.description}</Text>
+                    <Text style={styles.notificationTime}>{item.time}</Text>
+                  </View>
+                )}
+              />
+              <TouchableOpacity style={styles.closeButton} onPress={() => setShowNotifications(false)}>
+                <Text style={styles.closeText}>Fechar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
     </SafeAreaView>
   );
@@ -170,7 +212,7 @@ const styles = StyleSheet.create({
   headerTextContainer: { flex: 1 },
   greeting: { color: "#000", fontSize: 20, fontWeight: "bold" },
   subGreeting: { color: "#222", fontSize: 16 },
-  notificationIcon: { width: 80, height: 76, borderRadius: 12 },
+  notificationIcon: { width: 70, height: 70, borderRadius: 12 },
 
   // Quick Actions
   quickActions: { flexDirection: "row", justifyContent: "center", marginHorizontal: 13, marginBottom: 12 },
@@ -197,4 +239,15 @@ const styles = StyleSheet.create({
   pointName: { fontSize: 16, fontWeight: "bold", marginBottom: 10, color: "#000" },
   pointAddress: { fontSize: 14, color: "#222" },
   pointDistance: { fontSize: 16, fontWeight: "bold", color: "#25884F", alignSelf: "center" },
+
+  // Modal
+  modalOverlay: { flex: 1, backgroundColor: "rgba(0,0,0,0.4)", justifyContent: "flex-end" },
+  modalContent: { backgroundColor: "#FFF", borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, maxHeight: "70%" },
+  modalTitle: { fontSize: 20, fontWeight: "bold", marginBottom: 12, color: "#000" },
+  notificationItem: { borderBottomWidth: 1, borderBottomColor: "#EEE", paddingVertical: 10 },
+  notificationTitle: { fontSize: 16, fontWeight: "bold", color: "#000" },
+  notificationDesc: { fontSize: 14, color: "#333" },
+  notificationTime: { fontSize: 12, color: "#777", marginTop: 4 },
+  closeButton: { marginTop: 15, backgroundColor: "#25884F", padding: 12, borderRadius: 10, alignItems: "center" },
+  closeText: { color: "#FFF", fontSize: 16, fontWeight: "bold" },
 });
