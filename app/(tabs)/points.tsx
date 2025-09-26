@@ -1,7 +1,7 @@
 // Imports
 import * as Location from "expo-location";
 import * as NavigationBar from "expo-navigation-bar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   Image,
@@ -124,9 +124,30 @@ export default function App() {
   const [refreshing, setRefreshing] = useState(false);
 
   // Lista de cidades únicas
-  const uniqueCities = Array.from(
-    new Map(locations.map((loc) => [loc.cidade.toLowerCase(), loc.cidade])).values()
-  ).sort();
+  const uniqueCities = useMemo(() =>
+    Array.from(
+      new Map(locations.map((loc) => [loc.cidade.toLowerCase(), loc.cidade])).values()
+    ).sort()
+  , []);
+
+  // ================= Cálculo dos centros das cidades =================
+  const cityCenters = useMemo(() => {
+    const acc = locations.reduce((acc, loc) => {
+      const key = loc.cidade;
+      if (!acc[key]) acc[key] = { sumLat: 0, sumLon: 0, count: 0 };
+      acc[key].sumLat += loc.latitude;
+      acc[key].sumLon += loc.longitude;
+      acc[key].count += 1;
+      return acc;
+    }, {} as Record<string, { sumLat: number; sumLon: number; count: number }>);
+
+    return Object.fromEntries(
+      Object.entries(acc).map(([city, { sumLat, sumLon, count }]) => [
+        city,
+        { latitude: sumLat / count, longitude: sumLon / count },
+      ])
+    );
+  }, []);
 
   // Função para carregar localização e cidade mais próxima
   const loadUserLocation = async () => {
@@ -138,18 +159,19 @@ export default function App() {
       const coords = { latitude: loc.coords.latitude, longitude: loc.coords.longitude };
       setUserLocation(coords);
 
-      let nearest: LocationItem | null = null;
+      // Encontra a cidade mais próxima usando centros das cidades
+      let nearestCity: string | null = null;
       let minDistance = Number.MAX_SAFE_INTEGER;
 
-      for (const l of locations) {
-        const dist = getDistanceKm(coords.latitude, coords.longitude, l.latitude, l.longitude);
+      for (const [city, center] of Object.entries(cityCenters)) {
+        const dist = getDistanceKm(coords.latitude, coords.longitude, center.latitude, center.longitude);
         if (dist < minDistance) {
           minDistance = dist;
-          nearest = l;
+          nearestCity = city;
         }
       }
 
-      if (nearest) setSelectedCity(nearest.cidade);
+      if (nearestCity) setSelectedCity(nearestCity);
     } catch (err) {
       console.error("Erro ao carregar localização:", err);
     }
@@ -171,37 +193,34 @@ export default function App() {
   // Refresh handler
   const onRefresh = async () => {
     setRefreshing(true);
-    await loadUserLocation(); //recarrega pontos
+    await loadUserLocation();
     setRefreshing(false);
   };
 
-  // Filtra estabelecimentos
-  const filteredLocations = selectedCity
-    ? locations
-        .filter((loc) => loc.cidade.toLowerCase() === selectedCity.toLowerCase())
-        .filter(
-          (loc) =>
-            loc.nome_estabelecimento.toLowerCase().includes(searchText.toLowerCase()) ||
-            loc.endereco.toLowerCase().includes(searchText.toLowerCase())
-        )
-        .map((loc) => {
-          let distKm = Number.MAX_SAFE_INTEGER;
-          if (userLocation) {
-            distKm = getDistanceKm(
-              userLocation.latitude,
-              userLocation.longitude,
-              loc.latitude,
-              loc.longitude
-            );
-          }
-          return {
-            ...loc,
-            distance: distKm !== Number.MAX_SAFE_INTEGER ? `${distKm.toFixed(1)} Km` : "N/A",
-            distanceKm: distKm,
-          };
-        })
-        .sort((a, b) => a.distanceKm - b.distanceKm)
-    : [];
+  // ================= Filtra estabelecimentos com memo =================
+  const filteredLocations = useMemo(() => {
+    if (!selectedCity) return [];
+
+    return locations
+      .filter((loc) => loc.cidade.toLowerCase() === selectedCity.toLowerCase())
+      .filter(
+        (loc) =>
+          loc.nome_estabelecimento.toLowerCase().includes(searchText.toLowerCase()) ||
+          loc.endereco.toLowerCase().includes(searchText.toLowerCase())
+      )
+      .map((loc) => {
+        let distKm = Number.MAX_SAFE_INTEGER;
+        if (userLocation) {
+          distKm = getDistanceKm(userLocation.latitude, userLocation.longitude, loc.latitude, loc.longitude);
+        }
+        return {
+          ...loc,
+          distance: distKm !== Number.MAX_SAFE_INTEGER ? `${distKm.toFixed(1)} Km` : "N/A",
+          distanceKm: distKm,
+        };
+      })
+      .sort((a, b) => a.distanceKm - b.distanceKm);
+  }, [selectedCity, userLocation, searchText]);
 
   // Render item da lista
   const renderItem = ({ item }: { item: LocationItem & { distance: string } }) => (
