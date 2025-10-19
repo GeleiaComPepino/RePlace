@@ -169,7 +169,7 @@ export default function App() {
           {/* Header */}
           <View style={styles.header}>
             <View style={styles.headerTextContainer}>
-              <Text style={styles.greeting}>Olá Bryan!</Text>
+              <Text style={styles.greeting}>Olá!</Text>
               <Text style={styles.subGreeting}>
                 {notifications.length > 0 
                   ? `${notifications[0].title} • ${formatTimeAgo(notifications[0].timestamp)}`
