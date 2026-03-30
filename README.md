@@ -5,7 +5,7 @@
 ## 🚀 Sobre o Replace
 
 O **Replace** é um aplicativo mobile feito em **React Native** para ajudar você a **localizar pontos de reciclagem de baterias e pilhas** próximos.  
-Este projeto faz parte do **FiCiências** e foi desenvolvido por **Bryan Rafael (GeleiaComPepino)** para um projeto do FiCiências.
+Este projeto faz parte do **FiCiências** e foi desenvolvido por **Bryan Rafael** para um projeto do FiCiências.
 
 Com o Replace, você contribui para um planeta mais sustentável, descartando corretamente seus resíduos eletrônicos.
 
@@ -35,7 +35,7 @@ Com o Replace, você contribui para um planeta mais sustentável, descartando co
 
 1. Clone o repositório:  
 ```bash
-git clone https://github.com/GeleiaComPepino/RePlace.git
+git clone https://github.com/bryanrafaelbueno/RePlace.git
 cd RePlace
 ```
 
@@ -78,9 +78,9 @@ O Replace está sob **GNU General Public License (GPL)**, garantindo que você p
 
 ## Criador
 
-Exclusivamente desenvolvido por **GeleiaComPepino** para o **FiCiências**.  
+Exclusivamente desenvolvido por **Bryan Rafael Bueno** para o **FiCiências**.  
 
-<img src="https://github.com/GeleiaComPepino.png?size=100" alt="GeleiaComPepino logo" width="100" height="100" style="border-radius:50%;"/>
+<img src="https://github.com/bryanrafaelbueno.png?size=100" alt="bryanrafaelbueno logo" width="100" height="100" style="border-radius:50%;"/>
 
 💚 **Use o Replace e ajude o planeta reciclando suas baterias e pilhas!** 💚
 
